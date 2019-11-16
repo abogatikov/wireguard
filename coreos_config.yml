@@ -53,7 +53,7 @@ storage:
           set -ex
 
           source /etc/os-release
-          source /etc/coreos/update.conf:
+          source /etc/coreos/update.conf
 
           PKG="/var/lib/torcx/store/${VERSION_ID}/wireguard:CoreOS_${VERSION_ID}.torcx.tgz"
           BIN="/var/run/torcx/bin/wg"
@@ -74,6 +74,7 @@ storage:
             cd $TMP_DIR
             source /usr/share/coreos/update.conf
 
+            chmod +x ./ci.sh
             ./ci.sh "$GROUP" "$VERSION_ID"
 
             mv -f ".tmp/wireguard.CoreOS_${VERSION_ID}.torcx.tgz" "${PKG}"
