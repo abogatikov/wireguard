@@ -2,7 +2,7 @@ name: CI
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '23 50 * * *'
   push:
     branches: 
       - master
@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "build images"
           cd $GITHUB_WORKSPACE
-          dt=$(date -d '1 days ago' +"%Y-%m-%d")
+          dt=$(date -d '3 days ago' +"%Y-%m-%d")
           for GROUP in stable beta alpha
           do
             for VERSION in $(curl -s https://coreos.com/releases/releases-$GROUP.json | jq --arg dt $dt --raw-output 'to_entries[] | select(.value.release_date > $dt) | .key')
