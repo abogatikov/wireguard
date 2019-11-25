@@ -35,7 +35,7 @@ systemd:
         EnvironmentFile=/run/metadata/torcx
         ExecStartPre=-/sbin/modprobe ip6_udp_tunnel
         ExecStartPre=-/sbin/modprobe udp_tunnel
-        ExecStart=-/sbin/insmod ${TORCX_UNPACKDIR}/WireGuard/lib/modules/%v/extra/wireguard.ko
+        ExecStart=-/sbin/insmod ${TORCX_UNPACKDIR}/wireguard/lib/modules/%v/extra/wireguard.ko
         RemainAfterExit=yes
 
         [Install]
@@ -53,6 +53,7 @@ storage:
           set -ex
 
           source /etc/os-release
+          source /etc/coreos/update.conf
 
           PKG="/var/lib/torcx/store/${VERSION_ID}/wireguard:CoreOS_${VERSION_ID}.torcx.tgz"
           BIN="/var/run/torcx/bin/wg"
@@ -73,6 +74,7 @@ storage:
             cd $TMP_DIR
             source /usr/share/coreos/update.conf
 
+            chmod +x ./ci.sh
             ./ci.sh "$GROUP" "$VERSION_ID"
 
             mv -f ".tmp/wireguard.CoreOS_${VERSION_ID}.torcx.tgz" "${PKG}"
